@@ -1,0 +1,14 @@
+{
+  "name": "scores",
+  "version": "1.0.0",
+  "description": "Get sports scores and parse them from ESPN and then store them in the Squairs MySQL DB.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha "
+  },
+  "dependencies": {
+	"mysql": "^2.9.0"
+  },
+  "author": "Lance Whatley",
+  "license": "ISC"
+}
