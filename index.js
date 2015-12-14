@@ -23,7 +23,7 @@ Score.getAllFinalGames(function(_err,data) {
 			if (e) {
 				console.log("Squairs Error: ",e);
 			} else {
-				Sq.connection.query("CALL GetUnscoredEvents()",function(e,rows) {
+				Sq.connection.query(config.squairs.unscoredEventsSql,function(e,rows) {
 					if (e) {
 						console.log("Squairs Error: ",e);
 						return;

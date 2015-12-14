@@ -7,6 +7,9 @@ var self = module.exports = {
 			database: "DATABASE"
 		}
 	},
+	squairs: {
+		unscoredEventsSql: "SQL TO GET UNSCORED EVENTS"
+	},
 	scores: {
 		path: function(sport) {
 			return "DIRECTORY TO STATIC FILES SAVED";
