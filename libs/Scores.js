@@ -58,7 +58,7 @@ Scores.prototype.parseFinalGames = function(response) {
 	for (var _key in oResponse) {
 		if (_key.search(/^\w{1,8}_s_left\d{1,3}$/) > -1) {
 			if (this.isFinal(oResponse[_key].toLowerCase())) {
-				var formatted = oResponse[_key].replace(/([^\w\d\s\(\)'-\.]*)([\w\d\s\(\)'-\.]+\s\d{1,3})(\W*)(\s|\^)([\w\d\s\(\)'-\.]+\s\d{1,3})(.+)/,"$2|$5");
+				var formatted = oResponse[_key].replace(/([^\w\d\s\(\)'-\.]*)([\w\d\s\(\)'\-&\.]+\s\d{1,3})(\W*)(\s|\^)([\w\d\s\(\)'\-&\.]+\s\d{1,3})(.+)/,"$2|$5");
 				var teams = formatted.split("|");
 				
 				var o = {};
