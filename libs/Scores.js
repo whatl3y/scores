@@ -109,7 +109,7 @@ Scores.prototype.checkTeams = function(aliases,gameInfo) {
 }
 
 Scores.prototype.isFinal = function(text) {
-	var endOfGameText = ["(final)","(end of 4th)","(00:00 in 4th)","(final - ot)"];
+	var endOfGameText = ["(final)","(end of 4th)","(00:00 in 4th)","(final - ot)","(final - 2nd ot)","(final - 3rd ot)"];
 	
 	for (var _i=0;_i<endOfGameText.length;_i++) {
 		if (text.search(endOfGameText[_i]) > -1) {
