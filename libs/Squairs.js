@@ -1,5 +1,6 @@
 var http = require("http");
 var mysql = require("mysql");
+var config = require("./config.js");
 
 /*-----------------------------------------------------------------------------------------
 |TITLE:		Squairs.js
@@ -45,8 +46,8 @@ Squairs.prototype.postScore = function(info,cb) {
 	postData = this.serialize(postData);
 	
 	var options={
-		hostname: "squairs.com",
-		path: "/ADMIN/results/php/ajax/ajax_controllers_resultsCtrl.js.php",
+		hostname: config.squairs.domain,
+		path: config.squairs.postScorePath,
 		protocol: "http:",
 		port: 80,
 		method: "POST",
