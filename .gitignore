@@ -1,2 +1,4 @@
-# ignore real config
-/libs/config.js
+# ignore
+/.env
+/.env_linux
+/.env_windows
