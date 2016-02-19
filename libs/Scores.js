@@ -19,7 +19,7 @@ function Scores(sport) {
 	//sports include: nfl,nba,ncf,ncb,mlb,nhl
 	
 	this.sport = sport || "nfl";
-	this.endpoint = "sports.espn.go.com";
+	this.endpoint = "espn.go.com";
 	this.path = this.setPath(this.sport);
 }
 
@@ -58,10 +58,11 @@ Scores.prototype.parseFinalGames = function(response) {
 	for (var _key in oResponse) {
 		if (_key.search(/^\w{1,8}_s_left\d{1,3}$/) > -1) {
 			if (this.isFinal(oResponse[_key].toLowerCase())) {
-				var formatted = oResponse[_key].replace(/([^\w\d\s\(\)'-\.]*)([\w\d\s\(\)'\-&\.]+\s\d{1,3})(\W*)(\s|\^)([\w\d\s\(\)'\-&\.]+\s\d{1,3})(.+)/,"$2|$5");
+				var formatted = oResponse[_key].replace(/([^\w\d\s\(\)'-\.]*)([\w\d\s\(\)'\-&\.]+\s\d{1,3})(\W*)(\s|\^)([\w\d\s\(\)'\-&\.]+\s\d{1,3})(.*)(\(.+\))(.*)/,"$2|$5");
 				var teams = formatted.split("|");
 				
 				var o = {};
+        console.log(teams);
 				for (var _i=0;_i<teams.length;_i++) {
 					var team = teams[_i].replace(/^([\(\d\)\s]*)(.+)(\s)(\d{1,3})$/,"$2");
 					var score = teams[_i].replace(/^([\(\d\)\s]*)(.+)(\s)(\d{1,3})$/,"$4");
@@ -112,7 +113,7 @@ Scores.prototype.isFinal = function(text) {
 	var endOfGameText = ["(final)","(end of 4th)","(00:00 in 4th)","(final - ot)","(final - 2nd ot)","(final - 3rd ot)"];
 	
 	for (var _i=0;_i<endOfGameText.length;_i++) {
-		if (text.search(endOfGameText[_i]) > -1) {
+		if (text.search(endOfGameText[_i].toLowerCase()) > -1) {
 			return true;
 		}
 	}
