@@ -7,7 +7,7 @@
     "test": "mocha "
   },
   "dependencies": {
-	"mysql": "^2.9.0"
+    "mysql": "^2.9.0"
   },
   "author": "Lance Whatley",
   "license": "ISC"
