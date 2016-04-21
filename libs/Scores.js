@@ -27,7 +27,7 @@ Scores.prototype.getAllFinalGames = function(cb,events) {
   events = events || [];
   var self=this;
   
-  this.remainingEvents = this.remainingEvents || ["nfl","nba","ncf","ncb","mlb","nhl"];
+  this.remainingEvents = this.remainingEvents || ["nfl","nba","ncf","ncb","nhl","mlb"];
   this.sport = this.remainingEvents[0];
   this.setPath(this.sport);
   
@@ -121,17 +121,21 @@ Scores.prototype.isFinal = function(text) {
 }
 
 Scores.prototype.unserialize = function(string) {
-  string = string || "";
-  string=(/^\?/.test(string)) ? string.substring(1) : string;    //if first char is a question mark, remove it from the string
+  try {
+    string = string || "";
+    string=(/^\?/.test(string)) ? string.substring(1) : string;    //if first char is a question mark, remove it from the string
 
-  var a=string.split("&");
-  var obj={};
-  for (var _i=0;_i<a.length;_i++) {
-    var _a = a[_i].split("=");
-    obj[ decodeURIComponent(_a[0]) ] = decodeURIComponent(_a[1]);
-  }
-  
-  return obj;
+    var a=string.split("&");
+    var obj={};
+    for (var _i=0;_i<a.length;_i++) {
+      var _a = a[_i].split("=");
+      obj[ decodeURIComponent(_a[0] || "") ] = decodeURIComponent(_a[1] || "");
+    }
+    
+    return obj;
+  } catch(err) {
+    console.log(err);
+  }  
 }
 
 Scores.prototype.get = function(cb) {
