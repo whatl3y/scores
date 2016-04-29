@@ -32,17 +32,25 @@ Scores.prototype.getAllFinalGames = function(cb,events) {
   this.setPath(this.sport);
   
   this.get(function(_err,data) {
-    var o = {};
-    o[self.sport] = self.parseFinalGames(data);
-    
-    events.push(o);
-    self.remainingEvents.shift();
-    
-    if (self.remainingEvents.length) {
-      self.getAllFinalGames(cb,events);
-    } else {
-      if (typeof cb==="function") cb(_err,events);
-    }
+    if (_err) return cb(_err);
+    self.parseFinalGames(data,function(__err,ret) {
+      if (__err) {
+        console.trace("Error parsing final games:",__err);
+      } else {
+        var o = {};
+        o[self.sport] = ret;
+        
+        events.push(o);
+      }
+      
+      self.remainingEvents.shift();
+      
+      if (self.remainingEvents.length) {
+        self.getAllFinalGames(cb,events);
+      } else {
+        return cb(null,events);
+      }
+    });
   });
 }
 
@@ -51,30 +59,39 @@ Scores.prototype.setPath = function(sport,raw) {
   return this;
 }
 
-Scores.prototype.parseFinalGames = function(response) {
-  oResponse = this.unserialize(response);
+Scores.prototype.parseFinalGames = function(response,callback) {
+  var self = this;
   
-  var ret = [];
-  for (var _key in oResponse) {
-    if (_key.search(/^\w{1,8}_s_left\d{1,3}$/) > -1) {
-      if (this.isFinal(oResponse[_key].toLowerCase())) {
-        var formatted = oResponse[_key].replace(/([^\w\d\s\(\)'-\.]*)([\w\d\s\(\)'\-&\.]+\s\d{1,3})(\W*)(\s|\^)([\w\d\s\(\)'\-&\.]+\s\d{1,3})(.*)(\(.+\))(.*)/,"$2|$5");
-        var teams = formatted.split("|");
-        
-        var o = {};
-        for (var _i=0;_i<teams.length;_i++) {
-          var team = teams[_i].replace(/^([\(\d\)\s]*)(.+)(\s)(\d{1,3})$/,"$2");
-          var score = teams[_i].replace(/^([\(\d\)\s]*)(.+)(\s)(\d{1,3})$/,"$4");
-          
-          o[team] = Number(score);
+  this.unserialize(response,function(err,oResponse) {
+    if (err) return callback(err);
+    
+    try {
+      var ret = [];
+      for (var _key in oResponse) {
+        if (_key.search(/^\w{1,8}_s_left\d{1,3}$/) > -1) {
+          if (self.isFinal(oResponse[_key].toLowerCase())) {
+            var formatted = oResponse[_key].replace(/([^\w\d\s\(\)'-\.]*)([\w\d\s\(\)'\-&\.]+\s\d{1,3})(\W*)(\s|\^)([\w\d\s\(\)'\-&\.]+\s\d{1,3})(.*)(\(.+\))(.*)/,"$2|$5");
+            var teams = formatted.split("|");
+            
+            var o = {};
+            for (var _i=0;_i<teams.length;_i++) {
+              var team = teams[_i].replace(/^([\(\d\)\s]*)(.+)(\s)(\d{1,3})$/,"$2");
+              var score = teams[_i].replace(/^([\(\d\)\s]*)(.+)(\s)(\d{1,3})$/,"$4");
+              
+              o[team] = Number(score);
+            }
+            
+            ret.push(o);
+          }
         }
-        
-        ret.push(o);
       }
+      
+      return callback(null,ret);
+      
+    } catch(err) {
+      return callback(err);
     }
-  }
-  
-  return ret;
+  });
 }
 
 Scores.prototype.checkTeams = function(aliases,gameInfo) {
@@ -120,7 +137,7 @@ Scores.prototype.isFinal = function(text) {
   return false;
 }
 
-Scores.prototype.unserialize = function(string) {
+Scores.prototype.unserialize = function(string,cb) {
   try {
     string = string || "";
     string=(/^\?/.test(string)) ? string.substring(1) : string;    //if first char is a question mark, remove it from the string
@@ -132,9 +149,9 @@ Scores.prototype.unserialize = function(string) {
       obj[ decodeURIComponent(_a[0] || "") ] = decodeURIComponent(_a[1] || "");
     }
     
-    return obj;
+    cb(null,obj);
   } catch(err) {
-    console.log(err);
+    cb(err);
   }  
 }
 
@@ -162,10 +179,10 @@ Scores.prototype.get = function(cb) {
         function(res) {
           var body='';
           res.on('data',function(chunk) {
-            body+=chunk;
+            body += chunk;
           });
           res.on('end',function() {
-            if (typeof cb==='function') cb(null,body);
+            cb(null,body);
           });
         }
       ).on('error', function(e) {

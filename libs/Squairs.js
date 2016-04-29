@@ -1,5 +1,6 @@
 var http = require("http");
 var mysql = require("mysql");
+var DateTime = require("./DateTime.js");
 var config = require("./config.js");
 
 /*-----------------------------------------------------------------------------------------
@@ -105,6 +106,16 @@ Squairs.prototype.serialize = function(obj) {
 
   return query.length ? query.substr(0, query.length - 1) : query;
 };
+
+Squairs.prototype.notFinalScoreYet = function(dateUtc) {
+  var checkAgainstTime = new Date();
+  checkAgainstTime.setHours(checkAgainstTime.getHours() - 5);   //5 hours from now to check start time against
+  
+  var startTime = dateUtc + " UTC";
+  var dt = new DateTime({raw:true, date:startTime});
+  
+  return (dt.date > checkAgainstTime)
+}
 
 //-------------------------------------------------------
 //NodeJS
