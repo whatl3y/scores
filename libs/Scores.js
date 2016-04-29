@@ -35,7 +35,7 @@ Scores.prototype.getAllFinalGames = function(cb,events) {
     if (_err) return cb(_err);
     self.parseFinalGames(data,function(__err,ret) {
       if (__err) {
-        console.trace("Error parsing final games:",__err);
+        console.trace("Error parsing final games for sport '" + self.sport + "':",__err);
       } else {
         var o = {};
         o[self.sport] = ret;
