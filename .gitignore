@@ -2,3 +2,4 @@
 /.env
 /.env_linux
 /.env_windows
+/node_modules
