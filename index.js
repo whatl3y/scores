@@ -60,7 +60,7 @@ async.waterfall([
 
             var o = Score.checkTeams({visiting:visitingAliases,home:homeAliases},curGames[_j]);
 
-            if (typeof o==="object") {
+            if (typeof o === "object") {
               o.templateID = unscoredEvents[_i]["tid"];
               o.HomeTeamName = unscoredEvents[_i]["HomeTeamName"];
               o.VisitingTeamName = unscoredEvents[_i]["VisitingTeamName"];
@@ -73,7 +73,7 @@ async.waterfall([
                 }
               });
             } else {
-              console.log("o is not an object: " + o)
+              // console.log("o is not an object: " + o)
             }
           }
         } else {
