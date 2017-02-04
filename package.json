@@ -2,21 +2,24 @@
   "name": "scores",
   "version": "1.0.0",
   "description": "Get sports scores and parse them from ESPN and then store them in the Squairs MySQL DB.",
-  "main": "index.js",
+  "main": "bin/eval_current.js",
   "engines": {
     "node": ">=0.12"
   },
   "repository": {
     "type": "git",
-    "url" : "https://github.com/whatl3y/scores.git"
+    "url": "https://github.com/whatl3y/scores.git"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "bin/eval_current",
     "test": "mocha "
   },
   "dependencies": {
-    "async": "^1.5.2",
-    "mysql": "^2.9.0"
+    "async": "^2.1.1",
+    "minimist": "^1.2.0",
+    "moment-timezone": "^0.5.11",
+    "mysql": "^2.9.0",
+    "request": "^2.79.0"
   },
   "author": "Lance Whatley",
   "license": "ISC"

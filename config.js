@@ -1,3 +1,5 @@
+var path = require('path')
+
 var self = module.exports = {
   mysql: {
     creds: {
@@ -11,11 +13,11 @@ var self = module.exports = {
     domain: "squairs.com",
     postScorePath: process.env.SQUAIRS_POST_SCORE_PATH,
     unscoredEventsSql: "CALL " + process.env.SQUAIRS_UNSCORED_PROCEDURE + "()"
-    
+
   },
   scores: {
     path: function(sport) {
-      return __dirname+"\\..\\files\\"+sport+".txt";
+      return path.join('..','files',`${sport}.txt`)
     }
   }
-};
+}

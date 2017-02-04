@@ -1,6 +1,6 @@
 var http = require("http");
 var fs = require("fs");
-var config = require("./config.js");
+var config = require("../config.js");
 
 /*-----------------------------------------------------------------------------------------
 |TITLE:    Scores.js

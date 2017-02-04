@@ -1,41 +1,41 @@
-var http = require("http");
-var mysql = require("mysql");
-var DateTime = require("./DateTime.js");
-var config = require("./config.js");
+var http = require("http")
+var mysql = require("mysql")
+var DateTime = require("./DateTime.js")
+var config = require("../config.js")
 
 /*-----------------------------------------------------------------------------------------
 |TITLE:    Squairs.js
-|PURPOSE:  
+|PURPOSE:
 |AUTHOR:  Lance Whatley
 |CALLABLE METHODS:
-|          
-|ASSUMES:  
-|REVISION HISTORY:  
+|
+|ASSUMES:
+|REVISION HISTORY:
 |      *LJW 12/6/2015 - created
 -----------------------------------------------------------------------------------------*/
 function Squairs(opts) {
   var self=this;
   opts = opts || {};
-  
+
   this.connection = mysql.createConnection({
     host: opts.host,
     user: opts.user,
     password: opts.password,
     database: opts.database
-  });
+  })
 }
 
 Squairs.prototype.connect = function(cb) {
   this.connection.connect(function(e) {
     if (typeof cb === "function") {
-      cb(e);
+      cb(e)
     }
-  });
+  })
 }
 
 Squairs.prototype.postScore = function(info,cb) {
   var self=this;
-  
+
   var postData={
     type: "storeResult",
     template: info.templateID,
@@ -44,8 +44,8 @@ Squairs.prototype.postScore = function(info,cb) {
       visiting: info.visiting
     }
   };
-  postData = this.serialize(postData);
-  
+  postData = this.serialize(postData)
+
   var options={
     hostname: config.squairs.domain,
     path: config.squairs.postScorePath,
@@ -57,23 +57,23 @@ Squairs.prototype.postScore = function(info,cb) {
       'Content-Length': postData.length
     }
   };
-  
+
   var req = http.request(options,
     function(res) {
       var body='';
       res.on('data',function(chunk) {
         body+=chunk;
-      });
+      })
       res.on('end',function() {
-        if (typeof cb==='function') cb(null,body,info);
-      });
+        if (typeof cb==='function') cb(null,body,info)
+      })
     }
   ).on('error', function(e) {
-    cb(e);
-  });
-  
-  req.write(postData);
-  req.end();
+    cb(e)
+  })
+
+  req.write(postData)
+  req.end()
 };
 
 Squairs.prototype.serialize = function(obj) {
@@ -108,18 +108,18 @@ Squairs.prototype.serialize = function(obj) {
 };
 
 Squairs.prototype.notFinalScoreYet = function(dateUtc) {
-  var checkAgainstTime = new Date();
-  checkAgainstTime.setHours(checkAgainstTime.getHours() - 5);   //5 hours from now to check start time against
-  
+  var checkAgainstTime = new Date()
+  checkAgainstTime.setHours(checkAgainstTime.getHours() - 5)   //5 hours from now to check start time against
+
   var startTime = dateUtc + " UTC";
-  var dt = new DateTime({raw:true, date:startTime});
-  
+  var dt = new DateTime({raw:true, date:startTime})
+
   return (dt.date > checkAgainstTime)
 }
 
 //-------------------------------------------------------
 //NodeJS
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports=Squairs;
+  module.exports=Squairs
 }
 //-------------------------------------------------------
