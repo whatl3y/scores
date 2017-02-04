@@ -35,8 +35,9 @@ async.parallel([
     // review the individual league
     // day.LEAGUE = [day.LEAGUE[0]]
     async.each(day.LEAGUE, function(l, callback) {
-      const league = l.NAME
-      const sportType = sportTypeLeagueMap(league)
+      const aryLeagueSport = sportTypeLeagueMap(l.NAME)
+      const sportType = aryLeagueSport[0]
+      const league = aryLeagueSport[1]
 
       // l.GAME = [l.GAME[0]]
       async.each(l.GAME, function(g, _callback) {
@@ -240,7 +241,7 @@ async.parallel([
 )
 
 function sportTypeLeagueMap(league) {
-  const map = {
+  const sportMap = {
     MLB: 'Baseball',
     NFL: 'Football',
     FBC: 'Football',
@@ -248,7 +249,14 @@ function sportTypeLeagueMap(league) {
     NBA: 'Basketball',
     NHL: 'Hockey'
   }
-  return map[league]
+  const leagueMap = {
+    FBC: 'NCAA',
+    BKC: 'NCAA'
+  }
+  return [
+    sportMap[league],
+    leagueMap[league] || league
+  ]
 }
 
 function parseParticipantsAndPeriods(gameNumber, awayTeam, homeTeam) {
