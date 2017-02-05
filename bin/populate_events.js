@@ -44,7 +44,7 @@ async.parallel([
         if (!gamenumber) return _callback()
         console.log('gamenumber', gamenumber)
 
-        const dateUtc = moment(g.DATE).tz("America/New_York").utc().format()
+        const dateUtc = moment.tz(g.DATE, "America/New_York").utc().format()
         const description = g.NOTES
 
         // create/update individual events records
