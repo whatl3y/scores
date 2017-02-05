@@ -33,18 +33,17 @@ async.parallel([
     const day = oBody.DAY
 
     // review the individual league
-    // day.LEAGUE = [day.LEAGUE[0]]
     async.each(day.LEAGUE, function(l, callback) {
       const aryLeagueSport = sportTypeLeagueMap(l.NAME)
       const sportType = aryLeagueSport[0]
       const league = aryLeagueSport[1]
 
-      // l.GAME = [l.GAME[0]]
+      l.GAME = (l.GAME instanceof Array) ? l.GAME : [l.GAME]
       async.each(l.GAME, function(g, _callback) {
         const gamenumber = g.PRIMARYID
-
         if (!gamenumber) return _callback()
         console.log('gamenumber', gamenumber)
+
         const dateUtc = moment(g.DATE).tz("America/New_York").utc().format()
         const description = g.NOTES
 
