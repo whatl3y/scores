@@ -42,6 +42,8 @@ async.parallel([
       // l.GAME = [l.GAME[0]]
       async.each(l.GAME, function(g, _callback) {
         const gamenumber = g.PRIMARYID
+
+        if (!gamenumber) return _callback()
         console.log('gamenumber', gamenumber)
         const dateUtc = moment(g.DATE).tz("America/New_York").utc().format()
         const description = g.NOTES
