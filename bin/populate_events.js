@@ -4,13 +4,13 @@ const async = require('async')
 const request = require('request')
 const mysql = require('mysql')
 
-const endpoint = `http://www.scoresandodds.com/feeds/day/${moment().format('YYYYMMDD')}`
+const endpoint = argv.e || `http://www.scoresandodds.com/feeds/day/${moment().format('YYYYMMDD')}`
 
 const connection = mysql.createConnection({
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PW,
-  database: process.env.MYSQL_DB
+  host: argv.h || process.env.MYSQL_HOST,
+  user: argv.u || process.env.MYSQL_USER,
+  password: argv.p || process.env.MYSQL_PW,
+  database: argv.d || process.env.MYSQL_DB
 })
 
 async.parallel([
