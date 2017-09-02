@@ -3,3 +3,6 @@
 /.env_linux
 /.env_windows
 /node_modules
+/libs
+/bin
+/config.js
