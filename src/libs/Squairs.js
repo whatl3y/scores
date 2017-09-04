@@ -41,7 +41,7 @@ export default class Squairs {
     return new Promise((resolve, reject) => {
       this.request.post({
         url: config.squairs.postScorePath,
-        headers:  {'Content-type': 'application/json'},
+        headers:  { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: JSON.stringify({
           type: "storeResult",
           template: info.templateID,
