@@ -40,7 +40,7 @@ const leagueMap = {
 
                   const responseBody = await squairs.postScore(o)
                   console.log(`Success: Template ID: ${o.templateID} - ${o.VisitingTeamName} ${o.visiting} at ${o.HomeTeamName} ${o.home}`)
-                  console.log('Response from postScore', responseBody)
+                  // console.log('Response from postScore', responseBody)
 
                 } else {
                   // console.log("o is not an object: " + o)
@@ -52,6 +52,7 @@ const leagueMap = {
       }
     }
 
+    console.log('Successfully evaluated all events!')
     squairs.connection.destroy()
 
   } catch(err) {
