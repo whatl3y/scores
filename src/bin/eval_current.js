@@ -24,7 +24,7 @@ const leagueMap = {
       if (finalGames && finalGames.length) {
         await Promise.all(
           unscoredEvents.map(async event => {
-            if (squairs.notFinalScoreYet(`${event["StartDateGMT"]} UTC`)) return
+            if (squairs.notFinalScoreYet(event["StartDateGMT"])) return
 
             const curGames = finalGames.filter(g => Object.keys(g)[0] == leagueMap[event["SportLeague"]])[0][leagueMap[event["SportLeague"]]]
             await Promise.all(
