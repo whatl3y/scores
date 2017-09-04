@@ -8,7 +8,7 @@ const readFile = util.promisify(fs.readFile)
 const NOOP = () => {}
 
 export default class Scores {
-  constructor(sport) {
+  constructor(sport=null) {
     //sports include: nfl,nba,ncf,ncb,mlb,nhl
 
     this.sport = sport || "nfl"
@@ -38,7 +38,7 @@ export default class Scores {
     if (this.remainingEvents.length > 0) {
       return await this.getAllFinalGames(events)
     } else {
-      events
+      return events
     }
   }
 
@@ -86,10 +86,10 @@ export default class Scores {
       return false
     }
 
-    const v1 = checkTeam(visitingAliases,team1);
-    const v2 = checkTeam(visitingAliases,team2);
-    const h1 = checkTeam(homeAliases,team1);
-    const h2 = checkTeam(homeAliases,team2);
+    const v1 = checkTeam(visitingAliases, team1)
+    const v2 = checkTeam(visitingAliases, team2)
+    const h1 = checkTeam(homeAliases, team1)
+    const h2 = checkTeam(homeAliases, team2)
 
     if (v1 && h2) {
       return { home: team2score, visiting: team1score }
@@ -116,11 +116,11 @@ export default class Scores {
     const a = string.split("&")
     let obj = {}
     for (let _i = 0; _i < a.length; _i++) {
-      const _a = a[_i].split("=");
+      const _a = a[_i].split("=")
       try {
         obj[ decodeURIComponent(_a[0] || "") ] = decodeURIComponent(_a[1] || "")
       } catch(e) {
-        console.log(`Error parsing URI; _a[0]: ${_a[0]}; _a[1]: ${_a[1]}; error: ${e}`
+        console.log(`Error parsing URI; _a[0]: ${_a[0]}; _a[1]: ${_a[1]}; error: ${e}`)
       }
     }
     return obj
@@ -136,7 +136,7 @@ export default class Scores {
           return resolve(fileData)
         }
 
-        this.request(this.endpoint, (err, httpResponse, body) => {
+        this.request(this.path, (err, httpResponse, body) => {
           if (err) return reject(err)
           if (httpResponse.statusCode >= 400) return reject(body)
           resolve(body)
