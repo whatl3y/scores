@@ -44,7 +44,8 @@ async.parallel([
         if (!gamenumber) return _callback()
         console.log('gamenumber', gamenumber)
 
-        const dateUtc = moment.tz(g.DATE, "America/New_York").utc().format()
+        // const dateUtc = moment.tz(g.DATE, "America/New_York").utc().format()
+        const dateUtc = moment.tz(g.DATE, "America/New_York").toDate()
         const description = g.NOTES
 
         // create/update individual events records
@@ -174,9 +175,9 @@ async.parallel([
                           period.period_description,
                           period.periodcutoff_datetimeGMT,
                           period.period_update,
-                          period.moneyline_visiting,
-                          period.moneyline_home,
-                          period.moneyline_draw,
+                          period.moneyline_visiting || null,
+                          period.moneyline_home || null,
+                          period.moneyline_draw || null,
                           period.spread_visiting,
                           period.spread_adjust_visiting,
                           period.spread_home,
@@ -214,9 +215,9 @@ async.parallel([
                       period.period_description,
                       period.periodcutoff_datetimeGMT,
                       period.period_update,
-                      period.moneyline_visiting,
-                      period.moneyline_home,
-                      period.moneyline_draw,
+                      period.moneyline_visiting || null,
+                      period.moneyline_home || null,
+                      period.moneyline_draw || null,
                       period.spread_visiting,
                       period.spread_adjust_visiting,
                       period.spread_home,

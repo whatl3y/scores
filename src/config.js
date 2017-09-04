@@ -1,6 +1,6 @@
-var path = require('path')
+import path from 'path'
 
-var self = module.exports = {
+export default {
   mysql: {
     creds: {
       host: process.env.MYSQL_HOST,
@@ -12,12 +12,10 @@ var self = module.exports = {
   squairs: {
     domain: "squairs.com",
     postScorePath: process.env.SQUAIRS_POST_SCORE_PATH,
-    unscoredEventsSql: "CALL " + process.env.SQUAIRS_UNSCORED_PROCEDURE + "()"
+    unscoredEventsSql: `CALL ${process.env.SQUAIRS_UNSCORED_PROCEDURE}()`
 
   },
   scores: {
-    path: function(sport) {
-      return path.join('..','files',`${sport}.txt`)
-    }
+    path: sport => path.join('..', 'files', `${sport}.txt`)
   }
 }
