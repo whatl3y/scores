@@ -32,7 +32,7 @@ const leagueMap = {
                 const visitingAliases = event["VisitingTeamAliases"]
                 const homeAliases = event["HomeTeamAliases"]
 
-                const o = Score.checkTeams({ visiting: visitingAliases, home: homeAliases }, game)
+                const o = scores.checkTeams({ visiting: visitingAliases, home: homeAliases }, game)
                 if (typeof o === "object") {
                   o.templateID = event["tid"]
                   o.HomeTeamName = event["HomeTeamName"]
