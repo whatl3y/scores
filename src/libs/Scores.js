@@ -80,7 +80,7 @@ export default class Scores {
 
     const checkTeam = (aliases, team) => {
       for (let _i = 0; _i < aliases.length; _i++) {
-        if (aliases[_i].toLowerCase() == team.toLowerCase())
+        if (aliases[_i] && team && aliases[_i].toLowerCase() == team.toLowerCase())
           return team
       }
       return false
