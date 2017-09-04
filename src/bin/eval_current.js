@@ -38,8 +38,9 @@ const leagueMap = {
                   o.HomeTeamName = event["HomeTeamName"]
                   o.VisitingTeamName = event["VisitingTeamName"]
 
-                  const ret = await squairs.postScore(o)
+                  const responseBody = await squairs.postScore(o)
                   console.log(`Success: Template ID: ${o.templateID} - ${o.VisitingTeamName} ${o.visiting} at ${o.HomeTeamName} ${o.home}`)
+                  console.log('Response from postScore', responseBody)
 
                 } else {
                   // console.log("o is not an object: " + o)

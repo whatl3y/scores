@@ -41,15 +41,14 @@ export default class Squairs {
     return new Promise((resolve, reject) => {
       this.request.post({
         url: config.squairs.postScorePath,
-        headers:  { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: JSON.stringify({
+        form: {
           type: "storeResult",
           template: info.templateID,
           scores: {
             home: info.home,
             visiting: info.visiting
           }
-        })
+        }
       }, (err, httpResponse, body) => {
         if (err) return reject(err)
         if (httpResponse.statusCode >= 400) return reject(body)
