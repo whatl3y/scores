@@ -1,18 +1,17 @@
 {
-  "name": "scores",
+  "name": "sports-scores",
   "version": "1.0.0",
-  "description": "Get sports scores and parse them from ESPN and then store them in the Squairs MySQL DB.",
+  "description": "Get sports scores and parse them from ESPN and then store them in a MySQL database.",
   "main": "bin/eval_current.js",
   "engines": {
     "node": "8.4.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/whatl3y/scores.git"
+    "url": "https://github.com/whatl3y/sports-scores.git"
   },
   "scripts": {
-    "start": "node bin/eval_current",
-    "postinstall": "gulp prep-prod",
+    "postinstall": "gulp build",
     "test": "mocha --compilers js:babel-core/register --recursive './src/**/*.spec.js'"
   },
   "devDependencies": {
@@ -36,5 +35,5 @@
     "request": "^2.81.0"
   },
   "author": "Lance Whatley",
-  "license": "ISC"
+  "license": "MIT"
 }

@@ -11,5 +11,13 @@ $ node bin/populate_events
 #### Evaluate currently entered games
 
 ```
-$ node node bin/eval_current
+$ node bin/eval_current
+```
+
+## Development
+
+#### Build app
+
+```
+$ gulp build
 ```

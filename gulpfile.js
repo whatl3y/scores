@@ -10,38 +10,17 @@ gulp.task('config', function() {
     .pipe(gulp.dest("./"))
 })
 
-gulp.task('bin-dev', function() {
+gulp.task('bin', function() {
   return gulp.src("./src/bin/*.js")
     .pipe(babel())
     .pipe(gulp.dest("./bin"))
 })
 
-gulp.task('bin-prod', function() {
-  return gulp.src("./src/bin/*.js")
-    .pipe(sourcemaps.init())
-    .pipe(plumber())
-    .pipe(babel())
-    // .pipe(uglify().on('error', console.log))
-    .pipe(sourcemaps.write('./maps'))
-    .pipe(gulp.dest("./bin"))
-})
-
-gulp.task('libs-dev', function () {
+gulp.task('libs', function () {
   return gulp.src("./src/libs/*.js")
     .pipe(babel())
     // .pipe(uglify().on('error', console.log))
     .pipe(gulp.dest("./libs"))
 })
 
-gulp.task('libs-prod', function () {
-  return gulp.src("./src/libs/*.js")
-    .pipe(sourcemaps.init())
-    .pipe(plumber())
-    .pipe(babel())
-    // .pipe(uglify().on('error', console.log))
-    .pipe(sourcemaps.write('./maps'))
-    .pipe(gulp.dest("./libs"))
-})
-
-gulp.task('prep-dev', ['config', 'bin-dev', 'libs-dev'], function() {})
-gulp.task('prep-prod', ['config', 'bin-prod', 'libs-prod'], function() {})
+gulp.task('build', ['config', 'bin', 'libs'], function() {})
